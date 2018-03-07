@@ -7,11 +7,11 @@ import logging
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
-SECRET_KEY = config('SECRET_KEY')
-
-DEBUG = config('DEBUG', default=False, cast=bool)
-
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
+SECRET_KEY='rqr_cjv4igscyu8(0ce(=sy=f2)p=f_wn&@0xsp7m$@!kp=d'
+DEBUG=True
+ALLOWED_HOSTS='.localhost','127.0.0.1'
+DATABASE_URL='sqlite:///db.sqlite3'
+EMAIL_BACKEND='django.core.mail.backends.console.EmailBackend'
 
 
 INSTALLED_APPS = [
@@ -63,7 +63,7 @@ WSGI_APPLICATION = 'myproject.wsgi.application'
 
 DATABASES = {
     'default': dj_database_url.config(
-        default=config('DATABASE_URL')
+        default=DATABASE_URL
     )
 }
 
@@ -106,12 +106,6 @@ LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'home'
 
-EMAIL_BACKEND = config('EMAIL_BACKEND', default='django.core.mail.backends.smtp.EmailBackend')
-EMAIL_HOST = config('EMAIL_HOST', default='')
-EMAIL_PORT = config('EMAIL_PORT', default=587, cast=int)
-EMAIL_HOST_USER = config('EMAIL_HOST_USER', default='')
-EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD', default='')
-EMAIL_USE_TLS = config('EMAIL_USE_TLS', default=True, cast=bool)
 
 DEFAULT_FROM_EMAIL = 'Django Boards <noreply@djangoboards.com>'
 EMAIL_SUBJECT_PREFIX = '[Django Boards] '
