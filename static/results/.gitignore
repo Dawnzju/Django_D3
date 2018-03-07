@@ -1,0 +1,4 @@
+# This file will ensure that the directory is part of the repository even
+# though it should be kept empty.
+*
+!.gitignore

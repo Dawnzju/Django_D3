@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<html>
+<head>
+    <link rel="stylesheet" href="main.css">
+    <script src="js/d3.v4.min.js"></script>
+    <!-- call js files for different display -->
+    <script type="text/javascript" src="js/v1_display.js"></script>
+    <script type="text/javascript" src="js/v2_display.js"></script>
+    <script type="text/javascript" src="js/v3_display.js"></script>
+</head>
+<body>
+<header>
+    <h1>Title</h1>
+    <h3>** description here</h3>
+</header>
+<nav id="navbar">
+    <!-- Navigation bar here 
+    Need to change the naming to nicer description for the buttons later
+    -->
+    <h4>Click buttons for display</h4>
+</nav>
+<article id="d3img">
+      <!-- D3 image to be here, changes depending on the script below -->
+</article>
+<script type="text/javascript">
+    // defining the margin for the diagram area
+    var margin = { top: 50, right: 0, bottom: 100, left: 40 },
+    width = 960 - margin.left - margin.right,
+    height = 430 - margin.top - margin.bottom;
+    
+    // add 2 svg, one for diagram, the other for description
+    var svg = d3.select("#d3img").append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom);
+    var svg_desc =  d3.select("#d3img").append("svg")
+        .attr("width", width + margin.left + margin.right);
+    
+    // list of file names
+    var data_path = 'results/';
+    var filenames = ['processed_visualization_1.json','processed_visualization_2.json','processed_visualization_3.json'];
+    var navNames = ['Visualization 1', 'Visualization 2', 'Visualization 3'];
+    // Read Visualization 2 for testing
+    var current_data = function(filepath){
+        var diagram = svg.append("g")
+            .attr("id", "diagram")
+            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+        var dia_desc = svg_desc.append("g")
+            .attr("id","description");
+        // select options depending on the filepath
+        console.log("selected button",filepath);
+        switch (filepath) {
+        case data_path+filenames[0]:
+            v1(filepath,diagram,dia_desc);
+            break;
+        case data_path+filenames[1]:
+            v2(filepath,diagram,dia_desc);
+            break;
+        case data_path+filenames[2]:
+            v3(filepath,diagram,dia_desc);
+            break;
+        }
+    }
+    
+    current_data(data_path+filenames[0]);
+    
+    var datasetpicker = d3.select("#navbar").selectAll(".dataset-button")
+        .data(filenames);
+    
+    datasetpicker.enter()
+        .append("input")
+        .attr("value", function(d){ return d.split('.')[0]; })
+        .attr("type", "button")
+        .attr("class", "dataset-button")
+        .on("click", function(d) {
+            d3.selectAll("svg > *").remove();
+            current_data(data_path+d);
+        });
+    </script>
+</body>
+</html>
